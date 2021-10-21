@@ -31,8 +31,7 @@ export default function SignIn() {
       <Flex
         as="form"
         width="100%"
-        maxWidth={360}
-        bg="gray.800"
+        maxWidth={400}
         p="8"
         borderRadius={8}
         flexDir="column"

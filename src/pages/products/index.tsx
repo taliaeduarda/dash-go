@@ -1,39 +1,40 @@
+import { useEffect } from "react";
 import {
   Box,
   Flex,
-  Heading,
   Button,
-  Icon,
   Table,
   Spacer,
   Thead,
   Tr,
   Th,
-  Checkbox,
   Tbody,
   Td,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { RiAddLine, RiPencilLine } from "react-icons/ri";
-import { GrFormEdit } from "react-icons/gr";
-import { FiEdit2 } from "react-icons/fi";
+
 import { Header } from "../../components/Header";
-import { Pagination } from "../../components/Pagination";
-import { ModalNewProduct } from '../../components/ModalNewProduct'
+import { ModalNewProduct } from "../../components/ModalNewProduct";
 
 export default function UserList() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/products")
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  });
   return (
     <Box>
       <Header />
-      
+
       <Flex w="100%" my="6" mx="auto">
         <Flex borderRadius={8} px="8" fontSize="md" w="95%" mx="auto">
           <Button colorScheme="blackAlpha">Button</Button>
           <Spacer />
           <Button colorScheme="blackAlpha" onClick={onOpen}>
-          <ModalNewProduct isOpen={isOpen} onClose={onClose} />
+            <ModalNewProduct isOpen={isOpen} onClose={onClose} />
             Adicionar
           </Button>
         </Flex>
@@ -46,7 +47,9 @@ export default function UserList() {
               <Tr>
                 <Th fontSize="md">Nome</Th>
                 <Th fontSize="md">Data de cadastro</Th>
+                <Th fontSize="md">Fornecedor</Th>
                 <Th fontSize="md">Qty. em estoque</Th>
+                <Th fontSize="md">Código</Th>
                 <Th fontSize="md">uniti price</Th>
               </Tr>
             </Thead>
@@ -58,7 +61,9 @@ export default function UserList() {
                   </Box>
                 </Td>
                 <Td>04 de Abril, 2021</Td>
-                <Td></Td>
+                <Td>Americanas</Td>
+                <Td>12</Td>
+                <Td>TF545</Td>
                 <Td>R$34</Td>
 
                 {/* <Td>
@@ -76,13 +81,13 @@ export default function UserList() {
                   </Box>
                 </Td>
                 <Td>04 de Abril, 2021</Td>
-                <Td></Td>
+                <Td>Americanas</Td>
+                <Td>12</Td>
+                <Td>TF545</Td>
                 <Td>R$34</Td>
               </Tr>
             </Tbody>
           </Table>
-
-          {/* <Pagination /> */}
         </Box>
       </Flex>
     </Box>
