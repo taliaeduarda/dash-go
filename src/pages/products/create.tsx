@@ -56,60 +56,56 @@ export default function CreateProduct({ onClose }: CreateProductProps) {
     console.log(values);
   };
   return (
-    <Flex w="100%" mx="auto" justify="flex-start">
+    <Flex w="100%" mx="auto">
       <Box
         as="form"
         flex="1"
-        p={["6"]}
+        pl={[12]}
+        py={[4]}
         onSubmit={handleSubmit(handleCreateProduct)}
-      
       >
-       
-          <SimpleGrid   w="70%" mb='8'>
-            <Input
-              name="name"
-              type="name"
-              label="Nome do produto"
-              error={errors.name}
-              {...register("name")}
-            />
-           
-            </SimpleGrid>
-        
-            <SimpleGrid  spacing={["8", "10"]} w="50%" >
-            <Input
-              name="price"
-              type="number"
-              label="Price"
-              error={errors.price}
-              {...register("price")}
-            />
-         
-            <Input
-              name="stock"
-              type="number"
-              label="Stock"
-              error={errors.stock}
-              {...register("stock")}
-            />
+        <SimpleGrid spacing={["8", "8"]} w="50%">
+          <Input
+            name="name"
+            type="name"
+            label="Nome do produto"
+            error={errors.name}
+            {...register("name")}
+          />
 
-            <Input
-              name="provider"
-              type="text"
-              label="Fornecedor"
-              error={errors.provider}
-              {...register("provider")}
-            />
-         
-            <Input
-              name="category"
-              type="text"
-              label="Categoria"
-              error={errors.category}
-              {...register("category")}
-            />
-          </SimpleGrid>
-      
+          <Input
+            name="price"
+            type="number"
+            label="Price"
+            error={errors.price}
+            {...register("price")}
+          />
+
+          <Input
+            name="stock"
+            type="number"
+            label="Stock"
+            error={errors.stock}
+            {...register("stock")}
+          />
+
+          <Input
+            name="provider"
+            type="text"
+            label="Fornecedor"
+            error={errors.provider}
+            {...register("provider")}
+          />
+
+          <Input
+            name="category"
+            type="text"
+            label="Categoria"
+            error={errors.category}
+            {...register("category")}
+          />
+        </SimpleGrid>
+
         <Flex></Flex>
         <Flex mt="8" justify="flex-end">
           <Box>

@@ -4,6 +4,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalFooter,
+  Heading,
   ModalBody,
   ModalCloseButton,
   Button,
@@ -18,10 +19,20 @@ interface ModalNewProductProps {
 
 export function ModalNewProduct({ isOpen, onClose }: ModalNewProductProps) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="5xl" motionPreset="slideInBottom" >
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      size="5xl"
+      motionPreset="slideInBottom"
+    >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Add Produto</ModalHeader>
+        <ModalHeader>
+          {" "}
+          <Heading as="h4" size="md" mb={4}>
+            Adicionar produto
+          </Heading>
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <CreateProduct onClose={onClose} />
