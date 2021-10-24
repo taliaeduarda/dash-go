@@ -1,6 +1,5 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 
 import { theme } from "../styles/theme";
 import { AppProps } from "next/app";
@@ -17,7 +16,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ChakraProvider resetCSS theme={theme}>
         <Component {...pageProps} />
       </ChakraProvider>
-      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }

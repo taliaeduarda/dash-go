@@ -48,7 +48,7 @@ export function makeServer() {
     },
 
     seeds(server) {
-      server.createList('product', 200)
+      server.createList('product', 5)
     },
 
     routes() {
@@ -75,7 +75,7 @@ export function makeServer() {
         )
       });
 
-      // this.get('/products/:id');
+      this.get('/products/:code');
       this.post('/products');
 
       this.namespace = '';

@@ -60,7 +60,7 @@ const series = [{ name: "series1", data: [31, 120, 10, 28, 57, 61, 109] }];
 export default function Dashboard() {
   return (
     <Flex direction="column" h="100vh">
-      <Header />
+      {/* <Header />
 
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
         <SimpleGrid flex="1" gap="4" minChildWidth="320px" align="flex-start">
@@ -77,7 +77,7 @@ export default function Dashboard() {
             <Chart options={options} series={series} type="area" height={160} />
           </Box>
         </SimpleGrid>
-      </Flex>
+      </Flex> */}
     </Flex>
   );
 }

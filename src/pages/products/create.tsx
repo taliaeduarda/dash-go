@@ -1,35 +1,27 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Heading,
-  HStack,
-  SimpleGrid,
-  VStack,
-  Spacer,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, SimpleGrid, VStack } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { useMutation } from "react-query";
+import { queryClient } from "../../services/queryClient";
 
 import { Input } from "../../components/Form/Input";
+import { api } from "../../services/api";
 
 type CreateProductFormData = {
   name: string;
-  price: number;
-  stock: number;
   provider: string;
+  code: number;
   category: string;
+  price: string;
+  amount: number;
 };
 
 const createProductFormSchema = yup.object().shape({
   name: yup.string().required("Nome obrigatório"),
-  price: yup.number().required("Informe um valor").positive(),
-  stock: yup.number().required().positive().integer(),
+  code: yup.number().required().positive().integer(),
+  price: yup.string().required("Informe um valor"),
+  amount: yup.number().required().positive().integer(),
   provider: yup.string().required("Campo obrigatório"),
   category: yup.string().required("Selecione uma categoria"),
 });
@@ -39,7 +31,24 @@ interface CreateProductProps {
 }
 
 export default function CreateProduct({ onClose }: CreateProductProps) {
-  const router = useRouter();
+  const createProduct = useMutation(
+    async (product: CreateProductFormData) => {
+      const response = await api.post("products", {
+        product: {
+          ...product,
+          created_at: new Date(),
+        },
+      });
+
+      return response.data.product;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("products");
+      },
+    }
+  );
+
   const {
     register,
     handleSubmit,
@@ -51,61 +60,72 @@ export default function CreateProduct({ onClose }: CreateProductProps) {
   const handleCreateProduct: SubmitHandler<CreateProductFormData> = async (
     values
   ) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await createProduct.mutateAsync(values);
 
-    console.log(values);
+    onClose();
   };
+
   return (
     <Flex w="100%" mx="auto">
       <Box
         as="form"
         flex="1"
-        pl={[12]}
         py={[4]}
         onSubmit={handleSubmit(handleCreateProduct)}
       >
-        <SimpleGrid spacing={["8", "8"]} w="50%">
-          <Input
-            name="name"
-            type="name"
-            label="Nome do produto"
-            error={errors.name}
-            {...register("name")}
-          />
+        <VStack spacing="8">
+          <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+            <Input
+              name="name"
+              type="string"
+              label="Nome do produto"
+              error={errors.name}
+              {...register("name")}
+            />
 
-          <Input
-            name="price"
-            type="number"
-            label="Price"
-            error={errors.price}
-            {...register("price")}
-          />
+            <Input
+              name="price"
+              type="string"
+              label="Price"
+              error={errors.price}
+              {...register("price")}
+            />
+          </SimpleGrid>
+          <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+            <Input
+              name="amount"
+              type="number"
+              label="Quantidade"
+              error={errors.amount}
+              {...register("amount")}
+            />
 
-          <Input
-            name="stock"
-            type="number"
-            label="Stock"
-            error={errors.stock}
-            {...register("stock")}
-          />
+            <Input
+              name="code"
+              type="number"
+              label="Código"
+              error={errors.code}
+              {...register("code")}
+            />
+          </SimpleGrid>
+          <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+            <Input
+              name="provider"
+              type="text"
+              label="Fornecedor"
+              error={errors.provider}
+              {...register("provider")}
+            />
 
-          <Input
-            name="provider"
-            type="text"
-            label="Fornecedor"
-            error={errors.provider}
-            {...register("provider")}
-          />
-
-          <Input
-            name="category"
-            type="text"
-            label="Categoria"
-            error={errors.category}
-            {...register("category")}
-          />
-        </SimpleGrid>
-
+            <Input
+              name="category"
+              type="text"
+              label="Categoria"
+              error={errors.category}
+              {...register("category")}
+            />
+          </SimpleGrid>
+        </VStack>
         <Flex></Flex>
         <Flex mt="8" justify="flex-end">
           <Box>
