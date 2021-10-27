@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Select, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Select, SimpleGrid, VStack, HStack, FormLabel } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,16 +8,16 @@ import { queryClient } from "../../services/queryClient";
 import { Input } from "../../components/Form/Input";
 import { api } from "../../services/api";
 
-enum CategoryEnum {
-  eletronic = "eletronic",
-  other = "other"
-}
+// enum CategoryEnum {
+//   eletronic = "eletronic",
+//   other = "other"
+// }
 
 type CreateProductFormData = {
   name: string;
   provider: string;
   code: number;
-  category: CategoryEnum;
+  category: string;
   price: string;
   amount: number;
 };
@@ -97,18 +97,13 @@ export default function CreateProduct({ onClose }: CreateProductProps) {
 
           </SimpleGrid>
           <SimpleGrid minChildWidth="240px" spacing={12} w="100%">
-
-
             <Input
               name="code"
               type="number"
               label="Código"
               error={errors.code}
               {...register("code")}
-
-
             />
-
             <Input
               name="price"
               type="string"
@@ -134,15 +129,19 @@ export default function CreateProduct({ onClose }: CreateProductProps) {
             />
           </SimpleGrid>
 
-
-          <SimpleGrid minChildWidth="240px" spacing={12} w="100%">
-            <Select placeholder="Select option" {...register("category")}>
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </Select>
-
+          <SimpleGrid minChildWidth="240px" spacing={12} w="50%" alignSelf="flex-start">
+            <HStack>
+              <FormLabel w="20%" fontSize="md"
+                color="gray.600"
+                fontWeight="normal">Categoria</FormLabel>
+              <Select {...register("category")} w="80%">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+              </Select>
+            </HStack>
           </SimpleGrid>
+
         </VStack>
         <Flex></Flex>
         <Flex mt="8" justify="flex-end">
