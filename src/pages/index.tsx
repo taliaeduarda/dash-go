@@ -5,6 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Input } from "../components/Form/Input";
 
+import { fetchPosts } from '../hooks/usePosts'
+
 type SignInFormData = {
   email: string;
   password: string;

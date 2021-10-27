@@ -2,6 +2,7 @@ import { api } from "../api";
 import { useQuery } from "react-query";
 
 type Product = {
+    id: string;
     name: string;
     provider: string;
     code: number;
@@ -27,6 +28,7 @@ export async function getProducts(page: number): Promise<GetProductsResponse> {
 
     const products = data.products.map(prod => {
         return {
+            id: prod.id,
             name: prod.name,
             code: prod.code,
             category: prod.category,

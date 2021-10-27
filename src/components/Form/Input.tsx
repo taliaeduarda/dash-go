@@ -29,8 +29,8 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
             fontSize="md"
             color="gray.600"
             fontWeight="normal"
-            textAlign="end"
-            mr={6}
+            w='20%'
+           
           >
             {label}
           </FormLabel>
@@ -39,6 +39,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         <ChakraInput
           name={name}
           id={name}
+          size="lg"
           focusBorderColor="pink.500"
           borderColor="gray.150"
           bgColor="whiteAlpha.100"
@@ -46,7 +47,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
           _hover={{
             bgColor: "whiteAlpha.100",
           }}
-          size="lg"
+          w="80%"
           ref={ref}
           {...rest}
         />

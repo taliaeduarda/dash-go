@@ -29,7 +29,7 @@ export function ModalNewProduct({ isOpen, onClose }: ModalNewProductProps) {
       <ModalContent>
         <ModalHeader>
           {" "}
-          <Heading as="h4" size="md" mb={4}>
+          <Heading as="h4" size="md" p={4} fontWeight="normal">
             Adicionar produto
           </Heading>
         </ModalHeader>

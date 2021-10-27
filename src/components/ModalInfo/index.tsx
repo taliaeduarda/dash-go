@@ -6,7 +6,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  HStack,
   Heading,
   SimpleGrid,
   Text,
@@ -15,13 +14,17 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { GrEdit } from "react-icons/gr";
+import Products from '../../types/index'
 
 interface ModalInfoProps {
   isOpen: boolean;
   onClose: () => void;
+  product: Products[];
 }
 
-export function ModalInfo({ isOpen, onClose }: ModalInfoProps) {
+export function ModalInfo({ isOpen, onClose, product }: ModalInfoProps) {
+
+  
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="6xl">
       <ModalOverlay />
@@ -35,7 +38,7 @@ export function ModalInfo({ isOpen, onClose }: ModalInfoProps) {
             color="gray.400"
             fontWeight="normal"
           >
-            salsinha
+
           </Heading>
           <ModalCloseButton />
         </ModalHeader>
@@ -56,6 +59,7 @@ export function ModalInfo({ isOpen, onClose }: ModalInfoProps) {
             >
               <Text fontSize="md" color="gray.400">
                 Handler
+
               </Text>
               <Text fontSize="md" color="blue">
                 talia eduarda

@@ -20,7 +20,7 @@ export function Header() {
       mx="auto"
       bg="white.100"
       // mt="4"
-      px="6"
+      px="20"
       align="center"
     >
       { !isWideVersion && (

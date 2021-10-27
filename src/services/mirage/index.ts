@@ -75,7 +75,7 @@ export function makeServer() {
         )
       });
 
-      this.get('/products/:code');
+      this.get('/products/:id');
       this.post('/products');
 
       this.namespace = '';

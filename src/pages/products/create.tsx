@@ -1,4 +1,4 @@
-import { Box, Button, Flex, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Select, SimpleGrid, VStack } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,11 +8,16 @@ import { queryClient } from "../../services/queryClient";
 import { Input } from "../../components/Form/Input";
 import { api } from "../../services/api";
 
+enum CategoryEnum {
+  eletronic = "eletronic",
+  other = "other"
+}
+
 type CreateProductFormData = {
   name: string;
   provider: string;
   code: number;
-  category: string;
+  category: CategoryEnum;
   price: string;
   amount: number;
 };
@@ -31,6 +36,7 @@ interface CreateProductProps {
 }
 
 export default function CreateProduct({ onClose }: CreateProductProps) {
+
   const createProduct = useMutation(
     async (product: CreateProductFormData) => {
       const response = await api.post("products", {
@@ -60,6 +66,7 @@ export default function CreateProduct({ onClose }: CreateProductProps) {
   const handleCreateProduct: SubmitHandler<CreateProductFormData> = async (
     values
   ) => {
+    console.log(values)
     await createProduct.mutateAsync(values);
 
     onClose();
@@ -68,19 +75,38 @@ export default function CreateProduct({ onClose }: CreateProductProps) {
   return (
     <Flex w="100%" mx="auto">
       <Box
+        borderTopColor="gray.150"
+        borderTopWidth='1px'
         as="form"
         flex="1"
-        py={[4]}
+        p={4}
         onSubmit={handleSubmit(handleCreateProduct)}
       >
-        <VStack spacing="8">
-          <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+        <VStack spacing="5">
+          <SimpleGrid minChildWidth="240px" spacing={12} w="100%" mt={6}>
             <Input
               name="name"
               type="string"
               label="Nome do produto"
               error={errors.name}
               {...register("name")}
+            />
+            <Box>
+              Proprietário da conta
+            </Box>
+
+          </SimpleGrid>
+          <SimpleGrid minChildWidth="240px" spacing={12} w="100%">
+
+
+            <Input
+              name="code"
+              type="number"
+              label="Código"
+              error={errors.code}
+              {...register("code")}
+
+
             />
 
             <Input
@@ -91,24 +117,7 @@ export default function CreateProduct({ onClose }: CreateProductProps) {
               {...register("price")}
             />
           </SimpleGrid>
-          <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
-            <Input
-              name="amount"
-              type="number"
-              label="Quantidade"
-              error={errors.amount}
-              {...register("amount")}
-            />
-
-            <Input
-              name="code"
-              type="number"
-              label="Código"
-              error={errors.code}
-              {...register("code")}
-            />
-          </SimpleGrid>
-          <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+          <SimpleGrid minChildWidth="240px" spacing={12} w="100%">
             <Input
               name="provider"
               type="text"
@@ -116,14 +125,23 @@ export default function CreateProduct({ onClose }: CreateProductProps) {
               error={errors.provider}
               {...register("provider")}
             />
-
             <Input
-              name="category"
-              type="text"
-              label="Categoria"
-              error={errors.category}
-              {...register("category")}
+              name="amount"
+              type="number"
+              label="Quantidade"
+              error={errors.amount}
+              {...register("amount")}
             />
+          </SimpleGrid>
+
+
+          <SimpleGrid minChildWidth="240px" spacing={12} w="100%">
+            <Select placeholder="Select option" {...register("category")}>
+              <option value="option1">Option 1</option>
+              <option value="option2">Option 2</option>
+              <option value="option3">Option 3</option>
+            </Select>
+
           </SimpleGrid>
         </VStack>
         <Flex></Flex>
@@ -132,7 +150,7 @@ export default function CreateProduct({ onClose }: CreateProductProps) {
             <Button variant="outline" mr="4" onClick={onClose}>
               Cancelar
             </Button>
-            <Button type="submit" colorScheme="blue" isLoading={isSubmitting}>
+            <Button type="submit" colorScheme="blackAlpha" isLoading={isSubmitting}>
               Salvar
             </Button>
           </Box>

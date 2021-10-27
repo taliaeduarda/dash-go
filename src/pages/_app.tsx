@@ -1,21 +1,25 @@
+import { useState } from 'react'
 import { ChakraProvider } from "@chakra-ui/react";
-import { QueryClientProvider } from "react-query";
-
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { theme } from "../styles/theme";
 import { AppProps } from "next/app";
 import { makeServer } from "../services/mirage";
-import { queryClient } from '../services/queryClient'
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query'
 
 if (process.env.NODE_ENV === "development") {
   makeServer();
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(() => new QueryClient())
   return (
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider resetCSS theme={theme}>
-        <Component {...pageProps} />
-      </ChakraProvider>
+      <Hydrate state={pageProps.dehydratedState}>
+        <ChakraProvider resetCSS theme={theme}>
+          <Component {...pageProps} />
+        </ChakraProvider>
+        <ReactQueryDevtools />
+      </Hydrate>
     </QueryClientProvider>
   );
 }
